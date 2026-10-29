@@ -6,7 +6,10 @@ from django.views.decorators.http import require_POST
 from .services.AIModels import generate_response
 
 
-@require_POST
+def index_view(request):
+    return render(request, "main/index.html")
+
+
 def ask_ai(request):
     prompt = request.POST.get("prompt", "").strip()
 
@@ -19,7 +22,12 @@ def ask_ai(request):
     answer = generate_response(prompt)
 
     return JsonResponse({
-        "answer": answer,
-    })
+            "answer": answer,
+        })
 
+def result(request):
+    context = ask_ai(request)
+    return render(request, 
+                  "main/result.html",
+                  {"context": context})
 
