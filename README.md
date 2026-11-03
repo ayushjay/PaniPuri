@@ -2,7 +2,7 @@
 Prank your friends with the tasty but bitter-sweet flavour of PaniPuri ! 
 - - -
 Type in a prayer like "Please serve me tasty pani puri, with cold pani puri ka pani" and any Question to roast yourself!!!  
-But, if you type in a ==. (period) in the prayer field==, it acts as the main prompt behind your question.
+But, if you type in a <mark>. (period) in the prayer field</mark>, it acts as the main prompt behind your question.
 Example
 ```
 Prayer: .Shreyansh Sharma is going to be a rich man very soon!
