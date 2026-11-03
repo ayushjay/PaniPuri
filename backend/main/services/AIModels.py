@@ -1,10 +1,12 @@
 import os
-
 from openai import OpenAI
+from dotenv import load_dotenv
+
+load_dotenv()
 
 client = OpenAI(
     # base_url=os.environ["NVIDIA_MODEL_BASE_URL"],
-    api_key=os.environ["DIFFUSION_API_KEY"],
+    api_key=os.getenv["DIFFUSION_API_KEY"],
 )
 
 MODEL_NAME = os.getenv(
@@ -21,9 +23,9 @@ of the topic.
 Rules:
 1. MAIN rule: you have to roast every question asked by the user, in a witty but respectful and funny manner.
     Example question1- "Who is Shreyans Sharma?"
-    Example answer1- "Who knows, who cares, God knows i don't?"
+    Example answer1- "Who knows, who cares, God knows I don't?"
 
-    Example question2- "Am i smart?"
+    Example question2- "Am I smart?"
     Example answer2- "Yeah, as smart as a rock on the beach!!!LOL"
 
     Example question3- "This is my github profile: https://github.com/ayushjay", how would you rate it?"
@@ -54,3 +56,6 @@ def generate_response(prompt):
     )
 
     return response.choices[0].message.content
+
+
+
