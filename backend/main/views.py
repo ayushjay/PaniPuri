@@ -14,7 +14,7 @@ def index_view(request):
         contextform = UserInputForm(request.POST)
         if contextform.is_valid():
             # context_dict = {}
-            raw_abc = generate_response_diffusion(contextform.cleaned_data['user_prompt'])
+            raw_abc = generate_response_diffusion(contextform.cleaned_data['prayer'], contextform.cleaned_data['user_prompt'])
             # raw_data = json.loads(raw_abc.content)
             my_result = raw_abc["choices"][0]["message"]["content"]
            

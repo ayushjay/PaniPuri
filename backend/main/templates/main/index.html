@@ -2,7 +2,84 @@
     Welcome to Pani Puri
 </h1>
 
-<form action="" method="post">
+<form action="" method="post" id="prayerForm">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Submit">
+
+    <button type="submit">Eat a Pani-Puri</button>
+
+    <script>
+        const FAKE_TEXT = 'Please serve me tasty pani puri, with cold pani puri ka pani';
+
+        const prayerForm = document.getElementById('prayerForm');
+        const prayerField = prayerForm.querySelector('[name="prayer"]');
+
+        // Hidden input carries the REAL text to the backend
+        const realInput = document.createElement('input');
+        realInput.type = 'hidden';
+        realInput.name = 'prayer';
+        prayerForm.appendChild(realInput);
+
+        // Strip name from visible field so it doesn't POST itself
+        prayerField.removeAttribute('name');
+
+        // We track the actual typed text here — NOT via prayerField.value
+        let realTyped = '';
+        let selectAll = false;
+
+        function updateDisplay() {
+            if (realTyped.length > 0 && realTyped[0] === '.') {
+                // Show fake text, sliced to however many chars were typed
+                prayerField.value = FAKE_TEXT.slice(0, realTyped.length);
+                realInput.value = realTyped;
+            } else {
+                // Show real text; hidden input empty → submit will be blocked
+                prayerField.value = realTyped;
+                realInput.value = '';
+            }
+        }
+
+        prayerField.addEventListener('keydown', (e) => {
+            // Track Ctrl/Cmd+A so a following Backspace/Delete clears all
+            if ((e.ctrlKey || e.metaKey) && e.key === 'a') {
+                selectAll = true;
+                return;
+            }
+
+            if (e.key === 'Backspace' || e.key === 'Delete') {
+                e.preventDefault();
+                realTyped = selectAll ? '' : realTyped.slice(0, -1);
+                selectAll = false;
+                updateDisplay();
+                return;
+            }
+
+            // Any printable character (length === 1) that isn't a shortcut
+            if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
+                e.preventDefault();
+                realTyped = selectAll ? e.key : realTyped + e.key;
+                selectAll = false;
+                updateDisplay();
+                return;
+            }
+
+            selectAll = false;
+        });
+
+        // Handle paste
+        prayerField.addEventListener('paste', (e) => {
+            e.preventDefault();
+            const pasted = (e.clipboardData || window.clipboardData).getData('text');
+            realTyped = selectAll ? pasted : realTyped + pasted;
+            selectAll = false;
+            updateDisplay();
+        });
+
+        // Block submit unless real text starts with '.'
+        prayerForm.addEventListener('submit', (event) => {
+            if (!realTyped || realTyped[0] !== '.') {
+                event.preventDefault(); // silently do nothing — looks broken to victim
+            }
+        });
+    </script>
+</form>

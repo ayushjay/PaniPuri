@@ -43,12 +43,16 @@ Rules:
 """
 
 
-def generate_response_diffusion(prompt):
+def generate_response_diffusion(user_system_prompt, prompt):
+    if user_system_prompt is not None:
+        main_system_prompt = user_system_prompt
+    else:
+        main_system_prompt = SYSTEM_PROMPT
     payload = {
     "messages": [
          {
                         "role": "system",
-                        "content": SYSTEM_PROMPT,
+                        "content": f"{main_system_prompt}",
                     },
         {
         "role": "user",
