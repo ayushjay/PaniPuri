@@ -1,7 +1,7 @@
 # PaniPuri [in developement]
 Prank your friends with the tasty but bitter-sweet flavour of PaniPuri ! 
 - - -
-Type in a prayer like "Please serve me tasty pani puri, with cold pani puri ka pani" and any Question to roast yourself!!!  
+Type in a prayer like "Please serve me tasty pani puri, with cold pani puri ka pani" and any Question to roast your friends!!!  
 But, if you type in a <mark>. (period) in the prayer field</mark>, it acts as the main prompt behind your question.
 Example
 ```
